@@ -1,10 +1,14 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/gosdevelopment/public_html/well-known
-    - /bin/mkdir -p $DEPLOYPATH
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp .env.example $DEPLOYPATH/.env
-    - /bin/sed -i "s/DB_DATABASE=.*/DB_DATABASE=gosdevelopment_main/" $DEPLOYPATH/.env
-    - /bin/sed -i "s/DB_USERNAME=.*/DB_USERNAME=gosdevelopment_go/" $DEPLOYPATH/.env
-    - /bin/sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=\".N?~Gyh^T)7X!MNn\"/" $DEPLOYPATH/.env
-    - /bin/sed -i "s/APP_URL=.*/APP_URL=https:\/\/go.sdevelopment.tech/" $DEPLOYPATH/.env
+    - export COREPATH=/home/gosdevelopment/well-known
+    - export PUBLICPATH=/home/gosdevelopment/public_html
+    - /bin/mkdir -p $COREPATH
+    - /bin/cp -R * $COREPATH
+    - /bin/cp .env.example $COREPATH/.env
+    - /bin/sed -i "s/DB_DATABASE=.*/DB_DATABASE=gosdevelopment_main/" $COREPATH/.env
+    - /bin/sed -i "s/DB_USERNAME=.*/DB_USERNAME=gosdevelopment_go/" $COREPATH/.env
+    - /bin/sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=\".N?~Gyh^T)7X!MNn\"/" $COREPATH/.env
+    - /bin/sed -i "s/APP_URL=.*/APP_URL=https:\/\/go.sdevelopment.tech/" $COREPATH/.env
+    - /bin/cp -rf public/* $PUBLICPATH/
+    - /bin/cp -f public/.htaccess $PUBLICPATH/
+    - /bin/sed -i "s|__DIR__.'/../|__DIR__.'/../well-known/|g" $PUBLICPATH/index.php
