@@ -45,46 +45,39 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('login', [AdminAuthController::class, 'login'])->name('login.submit');
     });
 
-    // Magic Upgrade Route (Fire and Forget)
+    // Magic Upgrade Route - النسخة النهائية المضمونة
     Route::get('/magic-upgrade', function () {
         try {
-            // 1. تنظيف شامل للكاش
+            // 1. تنظيف شامل لملفات الكاش والإعدادات
             \Illuminate\Support\Facades\Artisan::call('optimize:clear');
             
-            // 2. تصفير وإعادة بناء الجداول
+            // 2. إعادة بناء قاعدة البيانات بالكامل (تمسح كل شيء وتبدأ من جديد)
             \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
             
-            // 3. إضافة الدولة الأساسية يدوياً لفك التعارض
-            \Illuminate\Support\Facades\DB::table('countries')->insertOrIgnore([
-                'id' => 1, 
-                'name_ar' => 'السعودية', 
-                'name_en' => 'Saudi Arabia', 
-                'code' => '966', 
-                'is_active' => 1,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-
-            // 4. تشغيل جميع الـ Seeders الأساسية
+            // 3. تشغيل جميع الـ Seeders الأساسية (الدول، المدن، الجنسيات، المستخدمين، إلخ)
             \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
 
-            // 5. إضافة مناطق الرياض المتطورة (V2)
+            // 4. إضافة مناطق وأحياء الرياض المتطورة (V2)
             \Illuminate\Support\Facades\Artisan::call('db:seed', [
                 '--class' => 'RiyadhRegionsSeeder',
                 '--force' => true
             ]);
 
-            // 6. إنشاء حساب مدير (Admin) مضمون
-            $admin = \App\Models\User::updateOrCreate(
+            // 5. جلب أول جنسية مسجلة لاستخدامها في حساب المدير
+            $natId = \Illuminate\Support\Facades\DB::table('nationalities')->first()->id;
+
+            // 6. إنشاء حساب مدير (Admin) مضمون بكلمة سر سهلة للعميل وتغطية كل الحقول المطلوبة
+            \App\Models\User::updateOrCreate(
                 ['email' => 'admin@admin.com'],
                 [
-                    'name' => 'Admin User',
+                    'name' => 'المدير العام',
                     'phone' => '0500000000',
                     'age' => 30,
-                    'nationality_id' => 1,
+                    'nationality_id' => $natId,
                     'type' => 1, // TYPE_ADMIN
                     'password' => \Illuminate\Support\Facades\Hash::make('password'),
                     'email_verified_at' => now(),
+                    'status' => 1,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]
@@ -92,11 +85,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'System rebuilt successfully!',
+                'message' => 'System Rebuilt Successfully',
+                'admin_account' => 'admin@admin.com',
+                'password' => 'password',
                 'users_count' => \App\Models\User::count(),
-                'admin_ready' => $admin->email,
-                'note' => 'Try login with: admin@admin.com / password'
+                'countries' => \App\Models\Country::count(),
+                'cities' => \App\Models\City::count()
             ]);
+
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
