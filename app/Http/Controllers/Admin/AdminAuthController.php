@@ -26,8 +26,8 @@ class AdminAuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+        if (auth()->attempt($credentials)) {
+            $user = auth()->user();
             
             if ($user->isAdmin()) {
                 $request->session()->regenerate();

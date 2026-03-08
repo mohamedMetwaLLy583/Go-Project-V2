@@ -48,10 +48,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Magic Upgrade Route (Fire and Forget)
     Route::get('/magic-upgrade', function () {
         try {
-            // 1. تثبيت الجداول والتحديثات
+            // 1. تنظيف شامل للكاش
+            \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+            
+            // 2. تصفير وإعادة بناء الجداول
             \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
             
-            // 2. إضافة الدولة الأساسية يدوياً لفك التعارض
+            // 3. إضافة الدولة الأساسية يدوياً لفك التعارض
             \Illuminate\Support\Facades\DB::table('countries')->insertOrIgnore([
                 'id' => 1, 
                 'name_ar' => 'السعودية', 
@@ -62,26 +65,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 'updated_at' => now()
             ]);
 
-            // 3. تنظيف ملفات الكاش
-            \Illuminate\Support\Facades\Artisan::call('optimize:clear');
-            
-            // 4. إضافة البيانات الأساسية والمستخدمين (الدول، المدن، الأيام، الجنسيات، المستخدمين)
-            \Illuminate\Support\Facades\Artisan::call('db:seed', [
-                '--force' => true
-            ]);
+            // 4. تشغيل جميع الـ Seeders الأساسية
+            \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
 
-            // 5. إضافة مناطق الرياض المتطورة (للمشروع v2)
+            // 5. إضافة مناطق الرياض المتطورة (V2)
             \Illuminate\Support\Facades\Artisan::call('db:seed', [
                 '--class' => 'RiyadhRegionsSeeder',
                 '--force' => true
             ]);
 
-            // 6. إضافة مدير مخصص إضافي لسهولة الدخول للعميل
-            \App\Models\User::updateOrCreate(
+            // 6. إنشاء حساب مدير (Admin) مضمون
+            $admin = \App\Models\User::updateOrCreate(
                 ['email' => 'admin@admin.com'],
                 [
                     'name' => 'Admin User',
-                    'type' => 1,
+                    'type' => 1, // TYPE_ADMIN
                     'password' => \Illuminate\Support\Facades\Hash::make('password'),
                     'email_verified_at' => now(),
                     'created_at' => now(),
@@ -91,8 +89,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'System has been successfully updated! (Migrations run + Cache cleared + Regions added)',
-                'output' => \Illuminate\Support\Facades\Artisan::output()
+                'message' => 'System rebuilt successfully!',
+                'users_count' => \App\Models\User::count(),
+                'admin_ready' => $admin->email,
+                'note' => 'Try login with: admin@admin.com / password'
             ]);
         } catch (\Exception $e) {
             return response()->json([
