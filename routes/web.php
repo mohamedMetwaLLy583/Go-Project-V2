@@ -80,6 +80,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 [
                     'name' => 'Admin User',
                     'phone' => '0500000000',
+                    'age' => 30,
+                    'nationality_id' => 1,
                     'type' => 1, // TYPE_ADMIN
                     'password' => \Illuminate\Support\Facades\Hash::make('password'),
                     'email_verified_at' => now(),
