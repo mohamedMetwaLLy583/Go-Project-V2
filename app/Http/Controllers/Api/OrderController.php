@@ -106,6 +106,20 @@ class OrderController extends Controller
             }
 
             DB::commit();
+            
+            // إشعار لجميع السائقين بوجود طلب جديد
+            $drivers = \App\Models\User::where('type', \App\Models\User::TYPE_DRIVER)->get();
+            foreach ($drivers as $driver) {
+                Notification::create([
+                    'user_id' => $driver->id,
+                    'title' => 'طلب جديد متاح',
+                    'message' => 'يوجد طلب جديد متاح في منطقتك، يمكنك تقدّيم عرضك الآن. رقم الطلب #' . $order->id,
+                    'data' => [
+                        'order_id' => $order->id,
+                        'type' => 'new_order_available'
+                    ]
+                ]);
+            }
 
             return response()->json([
                 'success' => true,
