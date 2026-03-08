@@ -186,6 +186,7 @@ class UsersTableSeeder extends Seeder
 
     private function addDriverAvailability(): void
     {
+        $safeNow = '2026-01-01 12:00:00';
         // آيدي الأحيان
         $malazMadinaId = DB::table('neighborhoods')
             ->join('cities', 'neighborhoods.city_id', '=', 'cities.id')
@@ -303,6 +304,7 @@ class UsersTableSeeder extends Seeder
 
     private function addDriverImages(): void
     {
+        $safeNow = '2026-01-01 12:00:00';
         $driverIds = DB::table('users')->where('type', 2)->pluck('id');
 
         $images = [];
