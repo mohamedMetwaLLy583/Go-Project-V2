@@ -65,11 +65,29 @@ Route::prefix('admin')->name('admin.')->group(function () {
             // 3. تنظيف ملفات الكاش
             \Illuminate\Support\Facades\Artisan::call('optimize:clear');
             
-            // 4. إضافة البيانات التجريبية للمناطق والأحياء
+            // 4. إضافة البيانات الأساسية والمستخدمين (الدول، المدن، الأيام، الجنسيات، المستخدمين)
+            \Illuminate\Support\Facades\Artisan::call('db:seed', [
+                '--force' => true
+            ]);
+
+            // 5. إضافة مناطق الرياض المتطورة (للمشروع v2)
             \Illuminate\Support\Facades\Artisan::call('db:seed', [
                 '--class' => 'RiyadhRegionsSeeder',
                 '--force' => true
             ]);
+
+            // 6. إضافة مدير مخصص إضافي لسهولة الدخول للعميل
+            \App\Models\User::updateOrCreate(
+                ['email' => 'admin@admin.com'],
+                [
+                    'name' => 'Admin User',
+                    'type' => 1,
+                    'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                    'email_verified_at' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]
+            );
 
             return response()->json([
                 'status' => 'success',
