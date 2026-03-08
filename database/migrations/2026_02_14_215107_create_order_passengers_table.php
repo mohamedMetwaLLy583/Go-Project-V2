@@ -16,15 +16,15 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->enum('type', ['male', 'female', 'child', 'elderly']);
-            $table->timestamp('pickup_time');
-            $table->timestamp('return_time');
+            $table->timestamp('pickup_time')->nullable();
+            $table->timestamp('return_time')->nullable();
             $table->string('pickup_location');
             $table->string('return_location');
             // log , lat
-            $table->string('pickup_lat');
-            $table->string('pickup_lng');
-            $table->string('return_lat');
-            $table->string('return_lng');
+            $table->string('pickup_lat')->nullable();
+            $table->string('pickup_lng')->nullable();
+            $table->string('return_lat')->nullable();
+            $table->string('return_lng')->nullable();
             $table->timestamps();
         });
     }
