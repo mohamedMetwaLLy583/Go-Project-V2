@@ -9,6 +9,7 @@ class CountriesTableSeeder extends Seeder
 {
     public function run(): void
     {
+        $safeNow = '2026-01-01 12:00:00';
         DB::table('countries')->insert([
             [
                 'name_ar' => 'المملكة العربية السعودية',
@@ -18,8 +19,8 @@ class CountriesTableSeeder extends Seeder
                 'currency' => 'SAR',
                 'currency_symbol' => 'ر.س',
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name_ar' => 'جمهورية مصر العربية',
@@ -29,8 +30,8 @@ class CountriesTableSeeder extends Seeder
                 'currency' => 'EGP',
                 'currency_symbol' => 'ج.م',
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
         ]);
     }

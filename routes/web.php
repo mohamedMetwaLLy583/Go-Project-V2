@@ -66,6 +66,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             // 5. جلب أول جنسية مسجلة لاستخدامها في حساب المدير
             $natId = \Illuminate\Support\Facades\DB::table('nationalities')->first()->id;
 
+            $safeNow = '2026-01-01 12:00:00';
+
             // 6. إنشاء حساب مدير (Admin) مضمون بكلمة سر سهلة للعميل وتغطية كل الحقول المطلوبة
             \App\Models\User::updateOrCreate(
                 ['email' => 'admin@admin.com'],
@@ -76,10 +78,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
                     'nationality_id' => $natId,
                     'type' => 1, // TYPE_ADMIN
                     'password' => \Illuminate\Support\Facades\Hash::make('password'),
-                    'email_verified_at' => now(),
+                    'email_verified_at' => $safeNow,
                     'status' => 1,
-                    'created_at' => now(),
-                    'updated_at' => now()
+                    'created_at' => $safeNow,
+                    'updated_at' => $safeNow
                 ]
             );
 

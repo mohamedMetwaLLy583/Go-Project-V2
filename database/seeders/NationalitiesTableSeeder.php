@@ -56,13 +56,14 @@ class NationalitiesTableSeeder extends Seeder
             ['name_ar' => 'أسترالي', 'name_en' => 'Australian'],
         ];
 
+        $safeNow = '2026-01-01 12:00:00';
         $nationalitiesData = [];
         foreach ($nationalities as $nationality) {
             $nationalitiesData[] = [
                 'name_ar' => $nationality['name_ar'],
                 'name_en' => $nationality['name_en'],
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ];
         }
 
