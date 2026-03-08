@@ -90,7 +90,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 'password' => 'password',
                 'users_count' => \App\Models\User::count(),
                 'countries' => \App\Models\Country::count(),
-                'cities' => \App\Models\City::count()
+                'cities' => \App\Models\City::count(),
+                'jwt_check' => config('jwt.secret') ? 'OK' : 'MISSING'
             ]);
 
         } catch (\Exception $e) {
