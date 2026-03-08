@@ -49,12 +49,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/magic-upgrade', function () {
         try {
             // 1. تثبيت الجداول والتحديثات
-            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            \Illuminate\Support\Facades\Artisan::call('migrate:fresh', ['--force' => true]);
             
-            // 2. تنظيف ملفات الكاش للإعدادات والمسارات حتى تعمل الميزات الجديدة مباشرة
+            // 2. إضافة الدولة الأساسية يدوياً لفك التعارض
+            \Illuminate\Support\Facades\DB::table('countries')->insertOrIgnore([
+                'id' => 1, 
+                'name_ar' => 'السعودية', 
+                'name_en' => 'Saudi Arabia', 
+                'code' => '966', 
+                'is_active' => 1,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+            // 3. تنظيف ملفات الكاش
             \Illuminate\Support\Facades\Artisan::call('optimize:clear');
             
-            // 3. إضافة البيانات التجريبية للمناطق والأحياء
+            // 4. إضافة البيانات التجريبية للمناطق والأحياء
             \Illuminate\Support\Facades\Artisan::call('db:seed', [
                 '--class' => 'RiyadhRegionsSeeder',
                 '--force' => true
