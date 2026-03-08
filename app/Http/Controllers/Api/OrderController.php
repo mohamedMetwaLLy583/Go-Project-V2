@@ -26,18 +26,61 @@ class OrderController extends Controller
         }
 
         $status = $request->status;
+        $neighborhoodId = $request->neighborhood_id;
+        $zone = $request->zone;
 
-        $orders = Order::with(['user', 'nationality', 'passengers'])
-            ->where('user_id', $user->id) // Only show user's own orders for the app
-            ->when($status, function ($query) use ($status) {
-                $query->where('status', $status);
-            })
-            ->orderBy('id', 'desc')
-            ->get();
+        $query = Order::with(['user', 'nationality', 'passengers']);
+
+        // إذا كان المستخدم عميلاً، يرى طلباته فقط
+        if ($user->type == \App\Models\User::TYPE_USER) {
+            $query->where('user_id', $user->id);
+        } 
+        // إذا كان السائق، يرى الطلبات المتاحة (pending) أو التي قدم عليها
+        else if ($user->type == \App\Models\User::TYPE_DRIVER) {
+            $query->where(function($q) use ($user) {
+                $q->where('status', 'pending')
+                  ->orWhere('selected_driver_id', $user->id)
+                  ->orWhereHas('driverRequests', function($sub) use ($user) {
+                      $sub->where('driver_id', $user->id);
+                  });
+            });
+        }
+
+        // فلاتر إضافية
+        $query->when($status, function ($q) use ($status) {
+            $q->where('status', $status);
+        });
+
+        // فلترة حسب الحي (Neighborhood)
+        $query->when($neighborhoodId, function ($q) use ($neighborhoodId) {
+            $neighborhood = \App\Models\Neighborhood::find($neighborhoodId);
+            if ($neighborhood) {
+                $q->whereHas('passengers', function($sub) use ($neighborhood) {
+                    $sub->where('pickup_neighborhood', $neighborhood->name_ar)
+                        ->orWhere('pickup_neighborhood', $neighborhood->name_en);
+                });
+            }
+        });
+
+        // فلترة حسب المنطقة (Zone/Region)
+        $query->when($zone, function ($q) use ($zone) {
+            $neighborhoodNames = \App\Models\Neighborhood::where('direction', $zone)
+                ->pluck('name_ar')
+                ->toArray();
+            
+            if (!empty($neighborhoodNames)) {
+                $q->whereHas('passengers', function($sub) use ($neighborhoodNames) {
+                    $sub->whereIn('pickup_neighborhood', $neighborhoodNames);
+                });
+            }
+        });
+
+        $orders = $query->orderBy('id', 'desc')->get();
 
         return response()->json([
             'success' => true,
             'message' => 'تم استرجاع الطلبات بنجاح',
+            'count' => $orders->count(),
             'data' => OrderWithPassengersResource::collection($orders)
         ]);
     }
