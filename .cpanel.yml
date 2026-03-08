@@ -5,6 +5,7 @@ deployment:
     - /bin/mkdir -p $COREPATH
     - /bin/cp -R * $COREPATH
     - /bin/cp .env.example $COREPATH/.env
+    - /bin/sed -i "s/DB_HOST=.*/DB_HOST=localhost/" $COREPATH/.env
     - /bin/sed -i "s/DB_DATABASE=.*/DB_DATABASE=gosdevelopment_main/" $COREPATH/.env
     - /bin/sed -i "s/DB_USERNAME=.*/DB_USERNAME=gosdevelopment_go/" $COREPATH/.env
     - /bin/sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=\".N?~Gyh^T)7X!MNn\"/" $COREPATH/.env
