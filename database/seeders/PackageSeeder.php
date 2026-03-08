@@ -11,6 +11,7 @@ class PackageSeeder extends Seeder
 {
     public function run()
     {
+        $safeNow = '2026-01-01 12:00:00';
         $packages = [
             [
                 'name' => 'الباقة الأساسية',
@@ -27,8 +28,8 @@ class PackageSeeder extends Seeder
                 'sort_order' => 1,
                 'investment_amount' => null,
                 'coins' => 100,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'الباقة الفضية',
@@ -45,8 +46,8 @@ class PackageSeeder extends Seeder
                 'is_popular' => false,
                 'investment_amount' => 50,
                 'coins' => 250,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'الباقة الذهبية',
@@ -63,8 +64,8 @@ class PackageSeeder extends Seeder
                 'is_popular' => false,
                 'investment_amount' => 100,
                 'coins' => 500,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
         ];
 

@@ -11,13 +11,16 @@ class RiyadhRegionsSeeder extends Seeder
 {
     public function run()
     {
+        $safeNow = '2026-01-01 12:00:00';
         $riyadh = City::where('name_ar', 'like', '%الرياض%')->first();
         if (!$riyadh) {
             $riyadh = City::create([
                 'country_id' => 1,
                 'name_ar' => 'الرياض',
                 'name_en' => 'Riyadh',
-                'is_active' => true
+                'is_active' => true,
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow
             ]);
         }
 
@@ -65,7 +68,9 @@ class RiyadhRegionsSeeder extends Seeder
             $region = Region::create([
                 'name_ar' => $rData['name_ar'],
                 'name_en' => $rData['name_en'],
-                'is_active' => true
+                'is_active' => true,
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow
             ]);
 
             foreach ($rData['neighborhoods'] as $nData) {
@@ -74,7 +79,9 @@ class RiyadhRegionsSeeder extends Seeder
                     'region_id' => $region->id,
                     'name_ar' => $nData['name_ar'],
                     'name_en' => $nData['name_en'],
-                    'is_active' => true
+                    'is_active' => true,
+                    'created_at' => $safeNow,
+                    'updated_at' => $safeNow
                 ]);
             }
         }

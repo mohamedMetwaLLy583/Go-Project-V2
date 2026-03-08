@@ -13,10 +13,11 @@ class SettingSeeder extends Seeder
      */
     public function run(): void
     {
+        $safeNow = '2026-01-01 12:00:00';
         DB::table('settings')->insert([
             'app_commission' => '10', // نسبة عمولة التطبيق
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $safeNow,
+            'updated_at' => $safeNow,
         ]);
     }
 }

@@ -37,6 +37,7 @@ class CitiesTableSeeder extends Seeder
         ];
 
         $citiesData = [];
+        $safeNow = '2026-01-01 12:00:00';
 
         foreach ($saudiCities as $city) {
             $citiesData[] = [
@@ -44,8 +45,8 @@ class CitiesTableSeeder extends Seeder
                 'name_ar' => $city['name_ar'],
                 'name_en' => $city['name_en'],
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ];
         }
 
@@ -55,8 +56,8 @@ class CitiesTableSeeder extends Seeder
                 'name_ar' => $city['name_ar'],
                 'name_en' => $city['name_en'],
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ];
         }
 

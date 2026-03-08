@@ -62,6 +62,7 @@ class DaysTableSeeder extends Seeder
         ];
 
         $daysData = [];
+        $safeNow = '2026-01-01 12:00:00';
         foreach ($days as $day) {
             $daysData[] = [
                 'name_ar' => $day['name_ar'],
@@ -70,8 +71,8 @@ class DaysTableSeeder extends Seeder
                 'short_name_en' => $day['short_name_en'],
                 'order' => $day['order'],
                 'is_active' => true,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ];
         }
 

@@ -10,6 +10,7 @@ class UsersTableSeeder extends Seeder
 {
     public function run(): void
     {
+        $safeNow = '2026-01-01 12:00:00';
         $saudiNationalityId = DB::table('nationalities')->where('name_ar', 'سعودي')->value('id');
         $egyptianNationalityId = DB::table('nationalities')->where('name_ar', 'مصري')->value('id');
 
@@ -23,10 +24,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $saudiNationalityId,
                 'type' => 1, // Admin
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/1/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ]
         ];
 
@@ -41,10 +42,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $saudiNationalityId,
                 'type' => 2, // Driver
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/2/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'فهد القحطاني',
@@ -54,10 +55,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $saudiNationalityId,
                 'type' => 2, // Driver
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/3/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'عبدالله الحربي',
@@ -67,10 +68,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $saudiNationalityId,
                 'type' => 2, // Driver
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/4/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
 
             // سواقين مصريين
@@ -82,10 +83,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $egyptianNationalityId,
                 'type' => 2, // Driver
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/5/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'علي محسن',
@@ -95,10 +96,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $egyptianNationalityId,
                 'type' => 2, // Driver
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/6/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
         ];
 
@@ -112,10 +113,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $saudiNationalityId,
                 'type' => 3, // User
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/7/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'نورة عبدالله',
@@ -125,10 +126,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $saudiNationalityId,
                 'type' => 3, // User
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/8/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'فاطمة خالد',
@@ -138,10 +139,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $saudiNationalityId,
                 'type' => 3, // User
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/9/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'منى السيد',
@@ -151,10 +152,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $egyptianNationalityId,
                 'type' => 3, // User
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/10/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
             [
                 'name' => 'هدى أحمد',
@@ -164,10 +165,10 @@ class UsersTableSeeder extends Seeder
                 'nationality_id' => $egyptianNationalityId,
                 'type' => 3, // User
                 'password' => Hash::make('123456789'),
-                'email_verified_at' => now(),
+                'email_verified_at' => $safeNow,
                 'profile_picture' => 'upload/users/11/profile/profile_1771081076.jpg',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ],
         ];
 
@@ -223,8 +224,8 @@ class UsersTableSeeder extends Seeder
             'start_time' => '08:00:00',
             'end_time' => '18:00:00',
             'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $safeNow,
+            'updated_at' => $safeNow,
         ];
 
         $availabilityData[] = [
@@ -234,8 +235,8 @@ class UsersTableSeeder extends Seeder
             'start_time' => '08:00:00',
             'end_time' => '18:00:00',
             'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $safeNow,
+            'updated_at' => $safeNow,
         ];
 
         $availabilityData[] = [
@@ -245,8 +246,8 @@ class UsersTableSeeder extends Seeder
             'start_time' => '06:00:00',
             'end_time' => '18:00:00',
             'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $safeNow,
+            'updated_at' => $safeNow,
         ];
 
         // السائق 2: فهد القحطاني
@@ -257,8 +258,8 @@ class UsersTableSeeder extends Seeder
             'start_time' => '09:00:00',
             'end_time' => '17:00:00',
             'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $safeNow,
+            'updated_at' => $safeNow,
         ];
 
         $availabilityData[] = [
@@ -268,8 +269,8 @@ class UsersTableSeeder extends Seeder
             'start_time' => '09:00:00',
             'end_time' => '17:00:00',
             'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $safeNow,
+            'updated_at' => $safeNow,
         ];
 
         // السائق 3: عبدالله الحربي (فترتين في اليوم)
@@ -280,8 +281,8 @@ class UsersTableSeeder extends Seeder
             'start_time' => '08:00:00',
             'end_time' => '12:00:00',
             'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $safeNow,
+            'updated_at' => $safeNow,
         ];
 
         $availabilityData[] = [
@@ -291,8 +292,8 @@ class UsersTableSeeder extends Seeder
             'start_time' => '16:00:00',
             'end_time' => '20:00:00',
             'is_active' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'created_at' => $safeNow,
+            'updated_at' => $safeNow,
         ];
 
         if (!empty($availabilityData)) {
@@ -311,8 +312,8 @@ class UsersTableSeeder extends Seeder
                 $images[] = [
                     'user_id' => $driverId,
                     'image_path' => "upload/users/{$driverId}/car/car_{$i}_1771081772.jpg",
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    'created_at' => $safeNow,
+                    'updated_at' => $safeNow,
                 ];
             }
         }

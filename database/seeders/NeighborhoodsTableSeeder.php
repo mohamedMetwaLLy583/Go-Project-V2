@@ -38,6 +38,7 @@ class NeighborhoodsTableSeeder extends Seeder
         ];
         
         $neighborhoodsData = [];
+        $safeNow = '2026-01-01 12:00:00';
         foreach ($neighborhoods as $neighborhood) {
             $neighborhoodsData[] = [
                 'city_id'   => $neighborhood['city_id'],
@@ -45,8 +46,8 @@ class NeighborhoodsTableSeeder extends Seeder
                 'name_en'   => $neighborhood['name_en'],
                 'direction' => $neighborhood['direction'], 
                 'is_active' => true,
-                'created_at'=> now(),
-                'updated_at'=> now(),
+                'created_at'=> $safeNow,
+                'updated_at'=> $safeNow,
             ];
         }
         

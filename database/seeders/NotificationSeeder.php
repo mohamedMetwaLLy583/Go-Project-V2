@@ -11,36 +11,43 @@ class NotificationSeeder extends Seeder
 {
     public function run()
     {
+        $safeNow = '2026-01-01 12:00:00';
         // جلب المستخدمين
         $users = User::all();
 
         foreach ($users as $user) {
             // إشعارات عامة
-            Notification::create([
+            DB::table('notifications')->insert([
                 'user_id' => $user->id,
                 'title' => 'مرحباً بك في التطبيق',
                 'message' => 'شكراً لانضمامك إلينا. نتمنى لك تجربة ممتعة!',
-                'data' => ['action' => 'welcome'],
+                'data' => json_encode(['action' => 'welcome']),
                 'is_read' => false,
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ]);
 
             // عرض خاص
-            Notification::create([
+            DB::table('notifications')->insert([
                 'user_id' => $user->id,
                 'title' => 'عرض خاص 🎉',
                 'message' => 'احصل على خصم 20% على أول باقة تشترك فيها',
-                'data' => ['discount' => 20, 'code' => 'WELCOME20'],
+                'data' => json_encode(['discount' => 20, 'code' => 'WELCOME20']),
                 'is_read' => false,
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ]);
 
             // تذكير
-            Notification::create([
+            DB::table('notifications')->insert([
                 'user_id' => $user->id,
                 'title' => 'تذكير',
                 'message' => 'لا تنسى إكمال بيانات ملفك الشخصي',
-                'data' => ['link' => '/profile'],
+                'data' => json_encode(['link' => '/profile']),
                 'is_read' => true,
-                'read_at' => now(),
+                'read_at' => $safeNow,
+                'created_at' => $safeNow,
+                'updated_at' => $safeNow,
             ]);
         }
     }
