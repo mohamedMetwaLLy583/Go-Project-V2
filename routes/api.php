@@ -101,6 +101,7 @@ Route::group(['middleware' => 'api'], function () {
         Route::post('/store', [OrderController::class, 'store']);
         Route::get('/show/{id}', [OrderController::class, 'show']);
         Route::post('/cancel/{id}', [OrderController::class, 'cancel_order']);
+        Route::post('/{order}/notify-driver', [OrderController::class, 'notifyDriver']);
 
         // Driver Order Request
 

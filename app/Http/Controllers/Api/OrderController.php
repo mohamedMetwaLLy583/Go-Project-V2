@@ -386,6 +386,53 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * Send notification / invitation to a specific driver to apply for this order
+     */
+    public function notifyDriver(Request $request, Order $order)
+    {
+        $request->validate([
+            'driver_id' => 'required|exists:users,id'
+        ]);
+
+        if ($order->user_id !== auth('api')->id()) {
+            return response()->json(['error' => 'غير مصرح لك'], 403);
+        }
+
+        $driver = \App\Models\User::find($request->driver_id);
+
+        if (!$driver || $driver->type != 2) { // 2 = Driver
+            return response()->json(['error' => 'السائق غير موجود أو غير صحيح'], 404);
+        }
+
+        \App\Models\Notification::create([
+            'user_id' => $driver->id,
+            'title' => 'طلب مباشر لرحلة',
+            'message' => 'لقد تمت دعوتك من قبل عميل لتقديم عرض على رحلته رقم #' . $order->id,
+            'data' => [
+                'order_id' => $order->id,
+                'type' => 'customer_invitation'
+            ]
+        ]);
+
+        if (!empty($driver->fcm_token)) {
+            \App\Helpers\FCMHelper::sendNotification(
+                $driver->fcm_token,
+                'طلب مباشر لرحلة',
+                'لقد تمت دعوتك من قبل عميل لتقديم عرض على رحلته رقم #' . $order->id,
+                [
+                    'order_id' => $order->id,
+                    'type' => 'customer_invitation'
+                ]
+            );
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم إرسال الإشعار والدعوة للسائق بنجاح'
+        ]);
+    }
+
     private function calculateDistance($lat1, $lon1, $lat2, $lon2) {
         if (!$lat1 || !$lon1 || !$lat2 || !$lon2) {
             return 0; // إذا كانت الإحداثيات مفقودة

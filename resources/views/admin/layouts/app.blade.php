@@ -69,6 +69,11 @@
 
                 <div class="px-6 py-4 text-xs font-black text-gray-500 uppercase tracking-widest border-t border-gray-800 mt-4">إعدادات النظام</div>
 
+                <a href="{{ route('admin.sliders.index') }}" 
+                   class="flex items-center py-3 px-6 hover:bg-gray-800 transition-colors {{ request()->routeIs('admin.sliders.*') ? 'bg-gray-800 border-r-4 border-yellow-500' : '' }}">
+                    <span class="ml-3">🖼️</span> البانرات والعروض
+                </a>
+
                 <a href="{{ route('admin.nationalities.index') }}" 
                    class="flex items-center py-3 px-6 hover:bg-gray-800 transition-colors {{ request()->routeIs('admin.nationalities.*') ? 'bg-gray-800 border-r-4 border-yellow-500' : '' }}">
                     <span class="ml-3">🌍</span> الجنسيات

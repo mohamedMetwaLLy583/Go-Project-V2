@@ -174,6 +174,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('{id}/status', [AdminTicketController::class, 'updateStatus'])->name('update-status');
         });
 
+        // Sliders (Banners)
+        Route::resource('sliders', \App\Http\Controllers\Admin\AdminSliderController::class)->except(['show']);
+        Route::post('sliders/{slider}/status', [\App\Http\Controllers\Admin\AdminSliderController::class, 'updateStatus'])->name('sliders.update-status');
+
         // Notifications
         Route::prefix('notifications')->name('notifications.')->group(function () {
             Route::get('/', [AdminNotificationController::class, 'index'])->name('index');
