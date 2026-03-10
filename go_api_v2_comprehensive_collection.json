@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "go-project-v2-full",
 		"name": "Go Project V2 - Comprehensive API",
-		"description": "The complete API collection for Go Project V2 - Includes Customer and Driver flows.",
+		"description": "The complete API collection for Go Project V2 - Includes Customer and Driver flows with Geo-Filters.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -37,9 +37,10 @@
 			]
 		},
 		{
-			"name": "04. Driver Flow",
+			"name": "04. Driver Flow & Filters",
 			"item": [
-				{ "name": "List Available Drivers", "request": { "method": "GET", "url": "{{baseUrl}}/drivers" } },
+				{ "name": "List Drivers (Filtered by Neighborhood)", "request": { "method": "GET", "url": "{{baseUrl}}/drivers?neighborhood_id=1" } },
+				{ "name": "List Drivers (Filtered by Zone/Region)", "request": { "method": "GET", "url": "{{baseUrl}}/drivers?zone=North" } },
 				{ "name": "Apply to Order (Bid)", "request": { "auth": { "type": "bearer", "bearer": [{"key": "token", "value": "{{token}}"}] }, "method": "POST", "url": "{{baseUrl}}/orders/1/apply" } }
 			]
 		}
