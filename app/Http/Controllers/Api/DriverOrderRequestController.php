@@ -78,7 +78,7 @@ class DriverOrderRequestController extends Controller
         // نتأكد أن صاحب الأوردر هو اللي بيطلب البيانات
         if ($order->user_id !== auth('api')->id()) {
             return response()->json([
-                'message' => 'غير مصرح'
+                'error' => 'غير مصرح لك'
             ], 403);
         }
 
@@ -104,7 +104,7 @@ class DriverOrderRequestController extends Controller
 
         if ($order->user_id !== auth('api')->id()) {
             return response()->json([
-                'message' => 'غير مصرح'
+                'error' => 'غير مصرح لك'
             ], 403);
         }
 
@@ -170,7 +170,7 @@ class DriverOrderRequestController extends Controller
 
         if ($order->user_id !== auth('api')->id()) {
             return response()->json([
-                'message' => 'غير مصرح'
+                'error' => 'غير مصرح لك'
             ], 403);
         }
 

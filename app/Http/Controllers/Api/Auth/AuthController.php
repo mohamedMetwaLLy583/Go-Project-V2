@@ -66,7 +66,7 @@ class AuthController extends Controller
             return $this->respondWithToken($token, $user);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Registration failed: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'فشل التسجيل: ' . $e->getMessage()], 500);
         }
     }
 
@@ -175,7 +175,7 @@ class AuthController extends Controller
             return $this->respondWithToken($token, $user, $availabilityData);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'Registration failed: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'فشل التسجيل: ' . $e->getMessage()], 500);
         }
     }
 
@@ -231,7 +231,7 @@ class AuthController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['error' => 'المستخدم غير موجود'], 404);
         }
 
         // Load relationships based on user type
@@ -321,7 +321,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (! $token = auth('api')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح'], 401);
         }
 
         $user = auth('api')->user();
@@ -335,7 +335,7 @@ class AuthController extends Controller
     {
         auth('api')->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'تم تسجيل الخروج بنجاح']);
     }
 
     /**
@@ -353,7 +353,7 @@ class AuthController extends Controller
             // Return response with new token and user data
             return $this->respondWithToken($newToken, $user);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Could not refresh token'], 401);
+            return response()->json(['error' => 'تعذر تحديث الجلسة'], 401);
         }
     }
 

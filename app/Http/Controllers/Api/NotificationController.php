@@ -17,7 +17,7 @@ class NotificationController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         try {
@@ -71,7 +71,7 @@ class NotificationController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         try {
@@ -120,7 +120,7 @@ class NotificationController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         $validator = Validator::make($request->all(), [
@@ -175,7 +175,7 @@ class NotificationController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         try {
@@ -208,7 +208,7 @@ class NotificationController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         try {
@@ -246,7 +246,7 @@ class NotificationController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         try {

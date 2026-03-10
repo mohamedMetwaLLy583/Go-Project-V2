@@ -22,7 +22,7 @@ class OrderController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         $status = $request->status;
@@ -80,7 +80,7 @@ class OrderController extends Controller
         $setting = Setting::first();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         try {
@@ -169,18 +169,29 @@ class OrderController extends Controller
 
             DB::commit();
             
-            // إشعار لجميع السائقين بوجود طلب جديد
+            // إشعار لجميع السائقين بوجود طلب جديد (بنظام الدفعات لتفادي بطء الخادم)
             $drivers = \App\Models\User::where('type', \App\Models\User::TYPE_DRIVER)->get();
+            $notificationsData = [];
+            $now = now();
+            
             foreach ($drivers as $driver) {
-                Notification::create([
+                $notificationsData[] = [
                     'user_id' => $driver->id,
                     'title' => 'طلب جديد متاح',
-                    'message' => 'يوجد طلب جديد متاح في منطقتك، يمكنك تقدّيم عرضك الآن. رقم الطلب #' . $order->id,
-                    'data' => [
+                    'message' => 'يوجد طلب جديد متاح، يمكنك تقدّيم عرضك الآن. رقم الطلب #' . $order->id,
+                    'data' => json_encode([
                         'order_id' => $order->id,
                         'type' => 'new_order_available'
-                    ]
-                ]);
+                    ]),
+                    'is_read' => false,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
+            }
+
+            // إدخال الإشعارات على دفعات لمنع مشكلة التايم أوت (Timeout)
+            foreach (array_chunk($notificationsData, 500) as $chunk) {
+                Notification::insert($chunk);
             }
 
             return response()->json([
@@ -203,7 +214,7 @@ class OrderController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
         $order = Order::with(['user', 'nationality', 'passengers'])->find($id);
 
@@ -226,7 +237,7 @@ class OrderController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         $order = Order::where('id', $id)
@@ -296,11 +307,11 @@ class OrderController extends Controller
         $user = auth('api')->user();
 
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'غير مصرح لك'], 401);
         }
 
         if ($user->type != \App\Models\User::TYPE_USER) {
-            return response()->json(['error' => 'This API is only for customers'], 403);
+            return response()->json(['error' => 'هذه الواجهة مخصصة للعملاء فقط'], 403);
         }
 
         $orders = Order::with(['user', 'nationality', 'passengers'])
@@ -325,7 +336,7 @@ class OrderController extends Controller
         }
 
         if ($user->type != \App\Models\User::TYPE_DRIVER) {
-            return response()->json(['error' => 'This API is only for drivers'], 403);
+            return response()->json(['error' => 'هذه الواجهة مخصصة للسائقين فقط'], 403);
         }
 
         // إرجاع الطلبات التي قام السائق بتقديم عرض عليها
