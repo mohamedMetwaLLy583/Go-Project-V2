@@ -15,3 +15,6 @@ deployment:
     - /bin/cp -rf public/* $PUBLICPATH/
     - /bin/cp -f public/.htaccess $PUBLICPATH/
     - /bin/sed -i "s|__DIR__.'/../|__DIR__.'/../well-known/|g" $PUBLICPATH/index.php
+    - export COMPOSER_HOME=/home/gosdevelopment/.composer
+    - cd $COREPATH && composer install --optimize-autoloader --no-dev --ignore-platform-reqs
+    - cd $COREPATH && php artisan optimize:clear
