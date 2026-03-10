@@ -172,6 +172,7 @@ class OrderController extends Controller
             // إشعار لجميع السائقين بوجود طلب جديد (بنظام الدفعات لتفادي بطء الخادم)
             $drivers = \App\Models\User::where('type', \App\Models\User::TYPE_DRIVER)->get();
             $notificationsData = [];
+            $fcmTokens = [];
             $now = now();
             
             foreach ($drivers as $driver) {
@@ -187,11 +188,28 @@ class OrderController extends Controller
                     'created_at' => $now,
                     'updated_at' => $now,
                 ];
+
+                if (!empty($driver->fcm_token)) {
+                    $fcmTokens[] = $driver->fcm_token;
+                }
             }
 
             // إدخال الإشعارات على دفعات لمنع مشكلة التايم أوت (Timeout)
             foreach (array_chunk($notificationsData, 500) as $chunk) {
                 Notification::insert($chunk);
+            }
+
+            // إرسال الإشعارات المنبثقة عبر Firebase FCM
+            if (!empty($fcmTokens)) {
+                \App\Helpers\FCMHelper::sendNotification(
+                    $fcmTokens, 
+                    'طلب جديد متاح', 
+                    'يوجد طلب جديد متاح، يمكنك تقدّيم عرضك الآن. رقم الطلب #' . $order->id,
+                    [
+                        'order_id' => $order->id,
+                        'type' => 'new_order_available'
+                    ]
+                );
             }
 
             return response()->json([
@@ -275,6 +293,7 @@ class OrderController extends Controller
 
             $rejectedApplications = DriverOrderRequest::where('order_id', $order->id)
                 ->where('status', 'pending')
+                ->with('driver')
                 ->get();
 
             foreach ($rejectedApplications as $application) {
@@ -285,14 +304,26 @@ class OrderController extends Controller
 
                 Notification::create([
                     'user_id' => $application->driver_id,
-                    'title' => 'تم إلغاء الطلب بواسطة العميل',
-                    'message' => 'تم إلغاء الطلب بواسطة العميل على الطلب رقم #' . $order->id,
+                    'title' => 'تم إلغاء الطلب',
+                    'message' => 'تم إلغاء الطلب بواسطة العميل. رقم الطلب #' . $order->id,
                     'data' => [
                         'order_id' => $order->id,
                         'application_id' => $application->id,
                         'type' => 'application_rejected'
                     ]
                 ]);
+
+                if ($application->driver && $application->driver->fcm_token) {
+                    \App\Helpers\FCMHelper::sendNotification(
+                        $application->driver->fcm_token,
+                        'تم إلغاء الطلب',
+                        'تم إلغاء الطلب بواسطة العميل. رقم الطلب #' . $order->id,
+                        [
+                            'order_id' => $order->id,
+                            'type' => 'application_rejected'
+                        ]
+                    );
+                }
             }
         });
 

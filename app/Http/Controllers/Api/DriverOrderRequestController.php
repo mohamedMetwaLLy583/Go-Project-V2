@@ -64,6 +64,20 @@ class DriverOrderRequestController extends Controller
             ]
         ]);
 
+        $order->load('user');
+        if ($order->user && $order->user->fcm_token) {
+            \App\Helpers\FCMHelper::sendNotification(
+                $order->user->fcm_token,
+                'طلب جديد على الأوردر',
+                'يوجد سائق قدم عرضًا على طلبك رقم #' . $order->id,
+                [
+                    'order_id' => $order->id,
+                    'application_id' => $application->id,
+                    'type' => 'new_application'
+                ]
+            );
+        }
+
         return response()->json([
             'message' => 'تم التقديم بنجاح',
             'data' => $application
@@ -127,9 +141,24 @@ class DriverOrderRequestController extends Controller
                 ]
             ]);
 
+            $application->load('driver');
+            if ($application->driver && $application->driver->fcm_token) {
+                \App\Helpers\FCMHelper::sendNotification(
+                    $application->driver->fcm_token,
+                    'تم قبول عرضك',
+                    'تم قبول عرضك على الطلب رقم #' . $order->id,
+                    [
+                        'order_id' => $order->id,
+                        'application_id' => $application->id,
+                        'type' => 'application_accepted'
+                    ]
+                );
+            }
+
             // باقي السواقين اللي هيترفضوا
             $rejectedApplications = DriverOrderRequest::where('order_id', $order->id)
                 ->where('id', '!=', $application->id)
+                ->with('driver')
                 ->get();
 
             foreach ($rejectedApplications as $rejected) {
@@ -140,13 +169,26 @@ class DriverOrderRequestController extends Controller
                 Notification::create([
                     'user_id' => $rejected->driver_id,
                     'title' => 'تم رفض عرضك',
-                    'message' => 'تم رفض عرضك على الطلب رقم #' . $order->id,
+                    'message' => 'نأسف، تم رفض عرضك والموافقة على عرض آخر للطلب رقم #' . $order->id,
                     'data' => [
                         'order_id' => $order->id,
                         'application_id' => $rejected->id,
                         'type' => 'application_rejected'
                     ]
                 ]);
+
+                if ($rejected->driver && $rejected->driver->fcm_token) {
+                    \App\Helpers\FCMHelper::sendNotification(
+                        $rejected->driver->fcm_token,
+                        'تم رفض عرضك',
+                        'نأسف، تم رفض عرضك والموافقة على عرض آخر للطلب رقم #' . $order->id,
+                        [
+                            'order_id' => $order->id,
+                            'application_id' => $rejected->id,
+                            'type' => 'application_rejected'
+                        ]
+                    );
+                }
             }
 
             // تحديث حالة الأوردر وحفظ السائق المختار
@@ -188,6 +230,20 @@ class DriverOrderRequestController extends Controller
                 'type' => 'application_rejected'
             ]
         ]);
+
+        $application->load('driver');
+        if ($application->driver && $application->driver->fcm_token) {
+            \App\Helpers\FCMHelper::sendNotification(
+                $application->driver->fcm_token,
+                'تم رفض عرضك',
+                'تم رفض عرضك على الطلب رقم #' . $order->id,
+                [
+                    'order_id' => $order->id,
+                    'application_id' => $application->id,
+                    'type' => 'application_rejected'
+                ]
+            );
+        }
 
         return response()->json([
             'message' => 'تم رفض السواق'
