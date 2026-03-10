@@ -30,6 +30,20 @@ class DriverOrderRequestController extends Controller
             ], 422);
         }
 
+        // التأكد من أن حساب السائق مفعل (تمت مراجعته من لوحة التحكم)
+        if ($driver->status == 0) {
+            return response()->json([
+                'message' => 'عذراً، حسابك قيد المراجعة ولا يمكنك التقديم على الطلبات حالياً'
+            ], 403);
+        }
+
+        // التأكد من أن السائق يمتلك نقاط/رصيد كافي يغطي عمولة التطبيق للطلب
+        if ($driver->coins < $order->app_commission) {
+            return response()->json([
+                'message' => 'عذراً، رصيد النقاط الخاص بك غير كافٍ للتقديم على هذا الطلب'
+            ], 403);
+        }
+
         $application = DriverOrderRequest::create([
             'order_id' => $order->id,
             'driver_id' => $driver->id,

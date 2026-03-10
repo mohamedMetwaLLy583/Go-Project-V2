@@ -31,20 +31,9 @@ class OrderController extends Controller
 
         $query = Order::with(['user', 'nationality', 'passengers']);
 
-        // إذا كان المستخدم عميلاً، يرى طلباته فقط
-        if ($user->type == \App\Models\User::TYPE_USER) {
-            $query->where('user_id', $user->id);
-        } 
-        // إذا كان السائق، يرى الطلبات المتاحة (pending) أو التي قدم عليها
-        else if ($user->type == \App\Models\User::TYPE_DRIVER) {
-            $query->where(function($q) use ($user) {
-                $q->where('status', 'pending')
-                  ->orWhere('selected_driver_id', $user->id)
-                  ->orWhereHas('driverRequests', function($sub) use ($user) {
-                      $sub->where('driver_id', $user->id);
-                  });
-            });
-        }
+        // بناءً على طلب العميل، هذا الـ API يعرض جميع الطلبات المتاحة للكل
+        // يمكن إضافة فلتر حالة مثلاً pending فقط إذا لزم الأمر
+        $query->where('status', 'pending');
 
         // فلاتر إضافية
         $query->when($status, function ($q) use ($status) {
@@ -270,6 +259,59 @@ class OrderController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'تم إلغاء الطلب وكل عروض السائقين المرتبطة به'
+        ]);
+    }
+
+    public function my_orders(Request $request)
+    {
+        $user = auth('api')->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        if ($user->type != \App\Models\User::TYPE_USER) {
+            return response()->json(['error' => 'This API is only for customers'], 403);
+        }
+
+        $orders = Order::with(['user', 'nationality', 'passengers'])
+            ->where('user_id', $user->id)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم استرجاع طلباتي بنجاح',
+            'count' => $orders->count(),
+            'data' => OrderWithPassengersResource::collection($orders)
+        ]);
+    }
+
+    public function my_applications(Request $request)
+    {
+        $user = auth('api')->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        if ($user->type != \App\Models\User::TYPE_DRIVER) {
+            return response()->json(['error' => 'This API is only for drivers'], 403);
+        }
+
+        // إرجاع الطلبات التي قام السائق بتقديم عرض عليها
+        $orders = Order::with(['user', 'nationality', 'passengers'])
+            ->whereHas('driverRequests', function($sub) use ($user) {
+                $sub->where('driver_id', $user->id);
+            })
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'تم استرجاع الطلبات التي تقدمت عليها بنجاح',
+            'count' => $orders->count(),
+            'data' => OrderWithPassengersResource::collection($orders)
         ]);
     }
 }

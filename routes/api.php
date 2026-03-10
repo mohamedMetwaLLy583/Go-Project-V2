@@ -96,6 +96,8 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
+        Route::get('/my-orders', [OrderController::class, 'my_orders']);
+        Route::get('/my-applications', [OrderController::class, 'my_applications']);
         Route::post('/store', [OrderController::class, 'store']);
         Route::get('/show/{id}', [OrderController::class, 'show']);
         Route::post('/cancel/{id}', [OrderController::class, 'cancel_order']);
