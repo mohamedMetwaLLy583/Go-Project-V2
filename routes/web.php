@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AdminRoleController;
 use App\Http\Controllers\Admin\AdminStaffController;
 use App\Http\Controllers\Admin\AdminRegionController;
 use App\Http\Controllers\Admin\AdminCustomerController;
+use App\Http\Controllers\Admin\AdminCaptainJoinRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,17 @@ use App\Http\Controllers\Admin\AdminCustomerController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('/join-captain', function (\Illuminate\Http\Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'phone' => 'required|string|max:20',
+        'city' => 'required|string|max:100',
+        'car_model' => 'required|string|max:255',
+    ]);
+    \App\Models\CaptainJoinRequest::create($request->all());
+    return redirect()->to('/#join-captain')->with('success_join', 'تم تسجيل طلبك بنجاح! سيتواصل معك فريق الدعم قريباً لاستكمال أوراقك.');
+})->name('join.submit');
 
 Route::get('/db-test', function () {
     try {
@@ -173,5 +185,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('regions/{region}/neighborhoods', [AdminRegionController::class, 'neighborhoods'])->name('regions.neighborhoods');
         Route::post('regions/{region}/neighborhoods', [AdminRegionController::class, 'storeNeighborhood'])->name('regions.neighborhoods.store');
         Route::delete('neighborhoods/{neighborhood}', [AdminRegionController::class, 'deleteNeighborhood'])->name('neighborhoods.destroy');
+
+        // Captain Join Requests
+        Route::prefix('captain-requests')->name('captain-requests.')->group(function () {
+            Route::get('/', [AdminCaptainJoinRequestController::class, 'index'])->name('index');
+            Route::post('{id}/status', [AdminCaptainJoinRequestController::class, 'updateStatus'])->name('update-status');
+            Route::delete('{id}', [AdminCaptainJoinRequestController::class, 'destroy'])->name('destroy');
+        });
     });
 });

@@ -162,8 +162,25 @@
                 <p class="text-xl text-gray-400">سجل بياناتك الآن وسنتواصل معك لاستكمال إجراءات انضمامك والبدء في تحقيق الأرباح.</p>
             </div>
 
+            @if(session('success_join'))
+            <div class="mb-8 p-4 bg-green-500/20 border border-green-500 text-white rounded-xl text-center">
+                {{ session('success_join') }}
+            </div>
+            @endif
+
+            @if($errors->any())
+            <div class="mb-8 p-4 bg-red-500/20 border border-red-500 text-white rounded-xl">
+                <ul class="list-disc list-inside">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
             <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl">
-                <form action="#" method="POST" class="space-y-6">
+                <form action="{{ route('join.submit') }}" method="POST" class="space-y-6">
+                    @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-300 mb-2">الاسم الثلاثي</label>
@@ -196,7 +213,7 @@
                     <p class="text-sm text-gray-400 text-center mt-4">بضغطك على زر التسجيل، أنت توافق على معالجة بياناتك بغرض التواصل معك.</p>
 
                     <div class="pt-4 text-center">
-                        <button type="button" onclick="alert('تم تسجيل طلبك بنجاح! سيتواصل معك فريق الدعم قريباً.')" class="bg-primary hover:bg-orange-600 text-white font-bold text-lg py-4 px-12 rounded-full w-full sm:w-auto shadow-[0_0_20px_rgba(255,76,41,0.4)] transition-all transform hover:scale-105">
+                        <button type="submit" class="bg-primary hover:bg-orange-600 text-white font-bold text-lg py-4 px-12 rounded-full w-full sm:w-auto shadow-[0_0_20px_rgba(255,76,41,0.4)] transition-all transform hover:scale-105">
                             سجل اهتمامك الآن
                         </button>
                     </div>
