@@ -146,6 +146,10 @@
                     <h3 class="text-2xl font-bold text-dark mb-4">دعم فني 24/7</h3>
                     <p class="text-gray-600 leading-relaxed text-lg">فريق خدمة العملاء متواجد على مدار الساعة وجاهز للرد على استفساراتك وحل أي مشكلة قد تواجهك فوراً.</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
     <!-- App Screenshots/Mockups Section -->
     <div id="app-preview" class="py-24 bg-gray-50 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
