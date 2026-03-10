@@ -105,6 +105,7 @@ class OrderController extends Controller
                 'nationality_id' => $request->nationality_id,
                 'price' => $price,
                 'salary' => $request->salary,
+                'salary_type' => $request->salary_type ?: 'monthly',
                 'distance_km' => $request->distance_km,
                 'app_commission' => $setting->app_commission ?? ($price * 0.1),
                 'status' => 'pending',

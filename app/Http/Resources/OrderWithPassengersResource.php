@@ -39,6 +39,7 @@ class OrderWithPassengersResource extends JsonResource
             'car_condition' => $this->car_condition,
             'is_shared' => (bool) $this->is_shared,
             'salary' => (float) $this->salary,
+            'salary_type' => $this->salary_type,
             'start_date' => $this->start_date ? \Carbon\Carbon::parse($this->start_date)->format('Y-m-d') : null,
             'men_count' => (int) $this->men_count,
             'women_count' => (int) $this->women_count,

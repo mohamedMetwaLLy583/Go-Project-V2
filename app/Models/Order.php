@@ -32,6 +32,7 @@ class Order extends Model
         'car_condition',
         'is_shared',
         'salary',
+        'salary_type',
         'start_date',
         'men_count',
         'women_count',

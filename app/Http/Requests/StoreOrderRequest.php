@@ -17,6 +17,7 @@ class StoreOrderRequest extends FormRequest
             'nationality_id' => 'required|exists:nationalities,id',
             'price' => 'nullable|numeric|min:0',
             'salary' => 'required|numeric|min:0',
+            'salary_type' => 'nullable|in:weekly,monthly',
             'distance_km' => 'nullable|numeric|min:0',
             'notes' => 'nullable|string', // Some users might not add notes even if asterisk is there, but if required: 'required|string'
             'is_urgent' => 'required|boolean',
