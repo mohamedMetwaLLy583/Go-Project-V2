@@ -24,6 +24,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/db-test', function () {
+    try {
+        $pwd = env('DB_PASSWORD');
+        \Illuminate\Support\Facades\DB::connection()->getPdo();
+        return "Connected successfully. Parsed password length: " . strlen($pwd);
+    } catch (\Exception $e) {
+        $pwd = env('DB_PASSWORD');
+        return "Could not connect to the database. Error: " . $e->getMessage() . " | Parsed DB_PASSWORD length: " . strlen((string)$pwd) . " | Expected length: 16";
+    }
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
