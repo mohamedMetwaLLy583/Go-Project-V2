@@ -46,7 +46,7 @@ class AuthController extends Controller
                 'age' => $request->age,
                 'nationality_id' => $request->nationality_id,
                 'type' => 3, // User
-                'coins' => 100,
+                'coins' => 1000,
                 'status' => 1,
             ];
 
@@ -122,7 +122,7 @@ class AuthController extends Controller
                 'accept_smoking' => $request->accept_smoking,
                 'accept_others' => $request->accept_others,
                 'car_type' => $request->car_type,
-                'coins' => 100,
+                'coins' => 1000,
                 'wallet_balance' => 0,
                 'status' => 0,
             ];
