@@ -70,11 +70,14 @@
             <p class="mt-4 max-w-2xl mx-auto text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed">
                 اطلب سيارتك الآن بضغطة زر. أسرع كباتن، أسعار في متناول اليد، وأمان تام لجميع رحلاتك.
             </p>
-            <div class="flex justify-center gap-4 flex-col sm:flex-row">
-                <a href="#download" class="bg-primary hover:bg-orange-600 text-white font-bold text-lg py-4 px-10 rounded-full shadow-[0_0_30px_rgba(255,76,41,0.5)] transition-all transform hover:scale-105">
-                    احمل التطبيق للركاب
+            <div class="flex justify-center gap-4 flex-col sm:flex-row flex-wrap">
+                <a href="#order-ride" class="bg-primary hover:bg-orange-600 text-white font-bold text-lg py-4 px-10 rounded-full shadow-[0_0_30px_rgba(255,76,41,0.5)] transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                    🚕 اطلب مشوارك الآن
                 </a>
-                <a href="#join-captain" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-lg py-4 px-10 rounded-full transition-all transform hover:scale-105">
+                <a href="#download" class="bg-white text-dark hover:bg-gray-100 font-bold text-lg py-4 px-8 rounded-full shadow-lg transition-all transform hover:scale-105">
+                    احمل التطبيق
+                </a>
+                <a href="#join-captain" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-lg py-4 px-8 rounded-full transition-all transform hover:scale-105">
                     سجل كـ كابتن (سائق)
                 </a>
             </div>
