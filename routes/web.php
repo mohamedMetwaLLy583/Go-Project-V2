@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\AdminStaffController;
 use App\Http\Controllers\Admin\AdminRegionController;
 use App\Http\Controllers\Admin\AdminCustomerController;
 use App\Http\Controllers\Admin\AdminCaptainJoinRequestController;
+use App\Http\Controllers\Admin\AdminWebRideRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,17 @@ Route::post('/join-captain', function (\Illuminate\Http\Request $request) {
     \App\Models\CaptainJoinRequest::create($request->all());
     return redirect()->to('/#join-captain')->with('success_join', 'تم تسجيل طلبك بنجاح! سيتواصل معك فريق الدعم قريباً لاستكمال أوراقك.');
 })->name('join.submit');
+
+Route::post('/web-ride-request', function (\Illuminate\Http\Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'phone' => 'required|string|max:20',
+        'pickup_location' => 'required|string',
+        'dropoff_location' => 'required|string',
+    ]);
+    \App\Models\WebRideRequest::create($request->all());
+    return redirect()->to('/#order-ride')->with('success_ride', 'تم إرسال طلب المشوار الخاص بك! سيتواصل معك أحد كباتن جو خلال دقائق.');
+})->name('ride.request.submit');
 
 Route::get('/db-test', function () {
     try {
@@ -191,6 +203,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', [AdminCaptainJoinRequestController::class, 'index'])->name('index');
             Route::post('{id}/status', [AdminCaptainJoinRequestController::class, 'updateStatus'])->name('update-status');
             Route::delete('{id}', [AdminCaptainJoinRequestController::class, 'destroy'])->name('destroy');
+        });
+
+        // Web Ride Requests
+        Route::prefix('web-ride-requests')->name('web-ride-requests.')->group(function () {
+            Route::get('/', [AdminWebRideRequestController::class, 'index'])->name('index');
+            Route::post('{id}/status', [AdminWebRideRequestController::class, 'updateStatus'])->name('update-status');
+            Route::delete('{id}', [AdminWebRideRequestController::class, 'destroy'])->name('destroy');
         });
     });
 });

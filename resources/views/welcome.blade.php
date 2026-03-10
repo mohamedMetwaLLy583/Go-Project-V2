@@ -150,6 +150,68 @@
         </div>
     </div>
 
+    <!-- Order a Ride Section -->
+    <div id="order-ride" class="py-24 bg-white relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold text-dark mb-4">اطلب <span class="text-primary">مشوارك</span> الآن</h2>
+                <p class="text-xl text-gray-500">سجل طلب مشوارك المباشر وسنقوم بتوصيلك بأقرب كابتن متاح فوراً.</p>
+            </div>
+
+            @if(session('success_ride'))
+            <div class="mb-8 p-4 bg-green-100 border border-green-500 text-green-800 rounded-xl text-center font-bold">
+                {{ session('success_ride') }}
+            </div>
+            @endif
+
+            <div class="bg-gray-50 rounded-3xl p-8 md:p-12 border border-gray-100 shadow-xl relative">
+                <!-- Decorative Elements -->
+                <div class="absolute -top-6 -right-6 w-20 h-20 bg-primary/10 rounded-full blur-xl"></div>
+                
+                <form action="{{ route('ride.request.submit') }}" method="POST" class="space-y-6">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="ride_name" class="block text-sm font-bold text-gray-700 mb-2">اسمك الكريم</label>
+                            <input type="text" id="ride_name" name="name" required class="w-full px-5 py-4 bg-white border border-gray-200 rounded-xl text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-sm">
+                        </div>
+                        <div>
+                            <label for="ride_phone" class="block text-sm font-bold text-gray-700 mb-2">رقم الجوال للتواصل</label>
+                            <input type="tel" id="ride_phone" name="phone" placeholder="05xxxxxxxxx" required dir="ltr" class="w-full px-5 py-4 bg-white border border-gray-200 rounded-xl text-dark placeholder-gray-400 text-right focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                        <!-- Connecting line for desktop -->
+                        <div class="hidden md:block absolute top-[50%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-0.5 bg-gray-300 z-0"></div>
+                        
+                        <div class="relative z-10">
+                            <label for="pickup_location" class="block text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full inline-block"></span>
+                                نقطة الانطلاق (أين أنت؟)
+                            </label>
+                            <input type="text" id="pickup_location" name="pickup_location" placeholder="مثال: الرياض، حي الملقا" required class="w-full px-5 py-4 bg-white border border-gray-200 rounded-xl text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-sm">
+                        </div>
+                        <div class="relative z-10">
+                            <label for="dropoff_location" class="block text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
+                                <span class="w-2 h-2 bg-red-500 rounded-full inline-block"></span>
+                                الوجهة (إلى أين؟)
+                            </label>
+                            <input type="text" id="dropoff_location" name="dropoff_location" placeholder="مثال: مطار الملك خالد الدولي" required class="w-full px-5 py-4 bg-white border border-gray-200 rounded-xl text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all shadow-sm">
+                        </div>
+                    </div>
+
+                    <div class="pt-6 text-center">
+                        <button type="submit" class="bg-dark hover:bg-gray-900 text-white font-bold text-lg py-4 px-12 rounded-full w-full sm:w-auto shadow-xl transition-all transform hover:scale-105 flex items-center justify-center gap-3 mx-auto">
+                            <span>اطلب سيارة الآن</span>
+                            <span class="text-2xl">🚕</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- App Screenshots/Mockups Section -->
     <div id="app-preview" class="py-24 bg-gray-50 relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
