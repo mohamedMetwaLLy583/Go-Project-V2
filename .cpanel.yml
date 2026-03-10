@@ -4,13 +4,9 @@ deployment:
     - export PUBLICPATH=/home/gosdevelopment/public_html
     - /bin/mkdir -p $COREPATH
     - /bin/cp -R * $COREPATH
-    - /bin/cp .env.example $COREPATH/.env
-    - /bin/sed -i "s/DB_HOST=.*/DB_HOST=127.0.0.1/" $COREPATH/.env
-    - /bin/sed -i "s/DB_DATABASE=.*/DB_DATABASE=gosdevelopment_main/" $COREPATH/.env
-    - /bin/sed -i "s/DB_USERNAME=.*/DB_USERNAME=gosdevelopment_go/" $COREPATH/.env
-    - /bin/sed -i "s/DB_PASSWORD=.*/DB_PASSWORD=\".N?~Gyh^T)7X!MNn\"/" $COREPATH/.env
-    - /bin/sed -i "s/APP_URL=.*/APP_URL=https:\/\/go.sdevelopment.tech/" $COREPATH/.env
-    - /bin/sed -i "s/APP_KEY=.*/APP_KEY=base64:vvaJG2ZCgA+5DXKDMCNX8K\/\/tUTydoWnW3c955cf3Qs=/" $COREPATH/.env
+    - test -f $COREPATH/.env || /bin/cp .env.example $COREPATH/.env
+    - /bin/grep -q "^APP_URL=" $COREPATH/.env || /bin/echo "APP_URL=https://go.sdevelopment.tech" >> $COREPATH/.env
+    - /bin/grep -q "^APP_KEY=" $COREPATH/.env || /bin/echo "APP_KEY=base64:vvaJG2ZCgA+5DXKDMCNX8K//tUTydoWnW3c955cf3Qs=" >> $COREPATH/.env
     - /bin/grep -q "^JWT_SECRET=" $COREPATH/.env || /bin/echo "JWT_SECRET=11uO7YWOGcbHvaBTsMmzYqiZKa71UnZt6rZpN5bQPRboURhhMAUCcGAgMawgpw9m" >> $COREPATH/.env
     - /bin/cp -rf public/* $PUBLICPATH/
     - /bin/cp -f public/.htaccess $PUBLICPATH/
