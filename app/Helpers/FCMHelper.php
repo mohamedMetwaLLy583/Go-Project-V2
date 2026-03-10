@@ -75,6 +75,18 @@ class FCMHelper
                                 'title' => $title,
                                 'body' => $body,
                             ],
+                            'android' => [
+                                'notification' => [
+                                    'sound' => 'default'
+                                ]
+                            ],
+                            'apns' => [
+                                'payload' => [
+                                    'aps' => [
+                                        'sound' => 'default'
+                                    ]
+                                ]
+                            ]
                         ]
                     ];
                     
