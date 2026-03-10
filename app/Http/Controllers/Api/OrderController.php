@@ -87,6 +87,35 @@ class OrderController extends Controller
             DB::beginTransaction();
 
             $price = $request->input('price', 0);
+            
+            // حساب المسافة لكل راكب وجمعها
+            $totalDistance = 0;
+            $passengersData = $request->input('passengers');
+            foreach ($passengersData as $pData) {
+                $pickup_lat = $pData['pickup_lat'] ?? null;
+                $pickup_lng = $pData['pickup_lng'] ?? null;
+                $return_lat = $pData['return_lat'] ?? null;
+                $return_lng = $pData['return_lng'] ?? null;
+
+                if ($pickup_lat && $pickup_lng && $return_lat && $return_lng) {
+                    $distance = $this->calculateDistance($pickup_lat, $pickup_lng, $return_lat, $return_lng);
+                    // إذا كانت الرحلة ذهاب وعودة (round_trip)، نضرب المسافة في 2، وإلا نضيف المسافة كما هي للاتجاه الواحد
+                    $tripType = $request->trip_type ?: 'round_trip';
+                    if ($tripType == 'round_trip') {
+                        $totalDistance += ($distance * 2);
+                    } else {
+                        $totalDistance += $distance;
+                    }
+                }
+            }
+
+            // تحديث إجمالي الكيلومترات إذا لم يرسله التطبيق
+            $distanceKm = $request->distance_km ?: $totalDistance;
+
+            // تحديد عمولة التطبيق (نقطة لكل كيلومتر كمثال، أو ثابته من الإعدادات، أو 10% من السعر/الراتب)
+            // بناءً على طلبك، فإنه يتم بناء العمولة الآن بناءً على المسافة بالكيلومتر التي قمنا بحسابها
+            // مثلاً: 1 كيلومتر = 1 نقطة، أو يمكنك وضع أي معادلة تريدها
+            $appCommission = $setting->app_commission ?? ($distanceKm > 0 ? $distanceKm : ($price * 0.1));
 
             // إنشاء الطلب بكل الحقول الجديدة
             $order = Order::create([
@@ -95,8 +124,8 @@ class OrderController extends Controller
                 'price' => $price,
                 'salary' => $request->salary,
                 'salary_type' => $request->salary_type ?: 'monthly',
-                'distance_km' => $request->distance_km,
-                'app_commission' => $setting->app_commission ?? ($price * 0.1),
+                'distance_km' => $distanceKm,
+                'app_commission' => $appCommission,
                 'status' => 'pending',
                 'shift_type' => $request->shift_type ?: 'fixed',
                 'trip_type' => $request->trip_type ?: 'round_trip',
@@ -313,5 +342,24 @@ class OrderController extends Controller
             'count' => $orders->count(),
             'data' => OrderWithPassengersResource::collection($orders)
         ]);
+    }
+
+    private function calculateDistance($lat1, $lon1, $lat2, $lon2) {
+        if (!$lat1 || !$lon1 || !$lat2 || !$lon2) {
+            return 0; // إذا كانت الإحداثيات مفقودة
+        }
+
+        $earthRadius = 6371; // نصف قطر الأرض بالكيلومترات
+
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLon = deg2rad($lon2 - $lon1);
+
+        $a = sin($dLat / 2) * sin($dLat / 2) +
+             cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+             sin($dLon / 2) * sin($dLon / 2);
+
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        return round($earthRadius * $c, 2); // المسافة بالكيلومتر مقربة لأقرب رقمين عشريين
     }
 }
