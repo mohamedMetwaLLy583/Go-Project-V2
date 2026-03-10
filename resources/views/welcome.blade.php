@@ -74,7 +74,7 @@
                 <a href="#download" class="bg-primary hover:bg-orange-600 text-white font-bold text-lg py-4 px-10 rounded-full shadow-[0_0_30px_rgba(255,76,41,0.5)] transition-all transform hover:scale-105">
                     احمل التطبيق للركاب
                 </a>
-                <a href="#" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-lg py-4 px-10 rounded-full transition-all transform hover:scale-105">
+                <a href="#join-captain" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold text-lg py-4 px-10 rounded-full transition-all transform hover:scale-105">
                     سجل كـ كابتن (سائق)
                 </a>
             </div>
@@ -146,6 +146,61 @@
                     <h3 class="text-2xl font-bold text-dark mb-4">دعم فني 24/7</h3>
                     <p class="text-gray-600 leading-relaxed text-lg">فريق خدمة العملاء متواجد على مدار الساعة وجاهز للرد على استفساراتك وحل أي مشكلة قد تواجهك فوراً.</p>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Become a Captain Section (Driver Registration Form) -->
+    <div id="join-captain" class="py-24 bg-dark relative overflow-hidden">
+        <!-- Abstract decorations -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/2"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">انضم لفريق كباتن <span class="text-primary">جــو</span></h2>
+                <p class="text-xl text-gray-400">سجل بياناتك الآن وسنتواصل معك لاستكمال إجراءات انضمامك والبدء في تحقيق الأرباح.</p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl">
+                <form action="#" method="POST" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">الاسم الثلاثي</label>
+                            <input type="text" id="name" name="name" placeholder="أدخل اسمك الكامل" required class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">رقم الجوال</label>
+                            <input type="tel" id="phone" name="phone" placeholder="مثال: 05xxxxxxxxx" required dir="ltr" class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 text-right focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="city" class="block text-sm font-medium text-gray-300 mb-2">المدينة</label>
+                            <select id="city" name="city" required class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none cursor-pointer">
+                                <option value="" disabled selected class="text-gray-900">اختر مدينتك</option>
+                                <option value="riyadh" class="text-gray-900">الرياض</option>
+                                <option value="jeddah" class="text-gray-900">جدة</option>
+                                <option value="dammam" class="text-gray-900">الدمام</option>
+                                <option value="makkah" class="text-gray-900">مكة المكرمة</option>
+                                <option value="other" class="text-gray-900">أخرى</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="car_model" class="block text-sm font-medium text-gray-300 mb-2">موديل السيارة وسنة الصنع</label>
+                            <input type="text" id="car_model" name="car_model" placeholder="مثال: تويوتا كامري 2022" required class="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                        </div>
+                    </div>
+
+                    <p class="text-sm text-gray-400 text-center mt-4">بضغطك على زر التسجيل، أنت توافق على معالجة بياناتك بغرض التواصل معك.</p>
+
+                    <div class="pt-4 text-center">
+                        <button type="button" onclick="alert('تم تسجيل طلبك بنجاح! سيتواصل معك فريق الدعم قريباً.')" class="bg-primary hover:bg-orange-600 text-white font-bold text-lg py-4 px-12 rounded-full w-full sm:w-auto shadow-[0_0_20px_rgba(255,76,41,0.4)] transition-all transform hover:scale-105">
+                            سجل اهتمامك الآن
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
