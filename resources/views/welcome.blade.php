@@ -146,6 +146,123 @@
                     <h3 class="text-2xl font-bold text-dark mb-4">دعم فني 24/7</h3>
                     <p class="text-gray-600 leading-relaxed text-lg">فريق خدمة العملاء متواجد على مدار الساعة وجاهز للرد على استفساراتك وحل أي مشكلة قد تواجهك فوراً.</p>
                 </div>
+    <!-- App Screenshots/Mockups Section -->
+    <div id="app-preview" class="py-24 bg-gray-50 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold text-dark mb-4">نظرة على التطبيق</h2>
+                <div class="w-24 h-1.5 bg-primary mx-auto rounded-full mb-6"></div>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">تصميم عصري وسهل الاستخدام يتيح لك طلب رحلتك وتتبعها في ثوانٍ معدودة.</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16">
+                <!-- Screen 1 -->
+                <div class="relative group transform transition-all duration-500 hover:-translate-y-4">
+                    <div class="absolute inset-0 bg-primary/20 rounded-[3rem] blur-xl transform group-hover:scale-105 transition-transform duration-500"></div>
+                    <div class="w-64 h-[500px] bg-white rounded-[3rem] border-[10px] border-dark shadow-2xl overflow-hidden relative z-10">
+                        <div class="absolute top-0 inset-x-0 h-6 bg-dark rounded-b-3xl"></div>
+                        <!-- Mockup Content: Map View -->
+                        <div class="w-full h-full bg-gray-200 relative">
+                            <!-- Fake Map Graphic -->
+                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIj48cGF0aCBkPSJNMCAwbDQwMCA0MDBNMCA0MDBMNDAwIDAiIHN0cm9rZT0iI0RGRDdEMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBhdGggZD0iTTAgMjAwaDQwME0yMDAgMHY0MDAiIHN0cm9rZT0iI0RGRDdEMyIgc3Ryb2tlLXdpZHRoPSIyIi8+PC9zdmc+')] bg-cover opacity-50"></div>
+                            
+                            <!-- Fake Route -->
+                            <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                <path d="M 20,80 Q 50,50 80,20" fill="none" class="stroke-primary" stroke-width="3" stroke-dasharray="5,5"/>
+                                <circle cx="20" cy="80" r="4" class="fill-blue-500"/>
+                                <circle cx="80" cy="20" r="4" class="fill-red-500"/>
+                            </svg>
+
+                            <!-- Fake Bottom Sheet -->
+                            <div class="absolute bottom-0 inset-x-0 bg-white rounded-t-3xl shadow-[0_-5px_15px_rgba(0,0,0,0.1)] p-5">
+                                <div class="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4"></div>
+                                <h4 class="font-bold text-lg mb-2 text-dark">تأكيد نقطة الانطلاق</h4>
+                                <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl mb-4 border border-gray-100">
+                                    <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                                    <span class="text-sm font-semibold text-gray-700">الرياض، حي الملقا</span>
+                                </div>
+                                <button class="w-full bg-primary text-white py-3 rounded-xl font-bold">تأكيد الموقع</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 2 (Central & Prominent) -->
+                <div class="relative group transform transition-all duration-500 hover:-translate-y-4 md:-translate-y-8 z-20">
+                    <div class="absolute inset-0 bg-orange-500/30 rounded-[3rem] blur-2xl transform group-hover:scale-105 transition-transform duration-500"></div>
+                    <div class="w-72 h-[560px] bg-white rounded-[3rem] border-[10px] border-dark shadow-2xl overflow-hidden relative z-10">
+                        <div class="absolute top-0 inset-x-0 h-6 bg-dark rounded-b-3xl"></div>
+                        <!-- Mockup Content: Searching/Driver Found -->
+                        <div class="w-full h-full bg-primary/10 relative flex flex-col justify-between p-5 pt-10">
+                            
+                            <div class="text-center mt-4">
+                                <h3 class="font-black text-2xl text-dark mb-1">2 دقائق</h3>
+                                <p class="text-sm font-semibold text-primary">الكابتن في الطريق إليك</p>
+                            </div>
+
+                            <!-- Fake Car -->
+                            <div class="flex justify-center my-6">
+                                <div class="w-32 h-16 bg-white shadow-lg rounded-2xl flex items-center justify-center border-2 border-primary/20 relative">
+                                    <span class="font-black text-dark text-xl">🚗 GO</span>
+                                    <!-- Signal pulse -->
+                                    <div class="absolute -inset-4 border-2 border-primary rounded-3xl animate-ping opacity-20"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Driver Card -->
+                            <div class="bg-white p-4 rounded-2xl shadow-lg border border-gray-100 mt-auto mb-2">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500">م</div>
+                                    <div>
+                                        <h4 class="font-bold text-dark text-sm">محمد أحمد</h4>
+                                        <div class="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                                            <span class="text-yellow-400">★</span> 4.9 (120 رحلة)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center text-xs font-bold text-gray-600 border-t pt-3">
+                                    <span>تويوتا كامري</span>
+                                    <span>أ ب ج 1234</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 3 -->
+                <div class="relative group transform transition-all duration-500 hover:-translate-y-4">
+                    <div class="absolute inset-0 bg-primary/20 rounded-[3rem] blur-xl transform group-hover:scale-105 transition-transform duration-500"></div>
+                    <div class="w-64 h-[500px] bg-white rounded-[3rem] border-[10px] border-dark shadow-2xl overflow-hidden relative z-10">
+                        <div class="absolute top-0 inset-x-0 h-6 bg-dark rounded-b-3xl"></div>
+                        <!-- Mockup Content: Payment/Receipt -->
+                        <div class="w-full h-full bg-gray-50 relative p-5 pt-12 flex flex-col">
+                            
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 mt-4">
+                                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            
+                            <h3 class="text-center font-bold text-xl text-dark mb-1">الرحلة اكتملت!</h3>
+                            <p class="text-center text-gray-500 text-xs mb-6">نتمنى لك يوماً سعيداً</p>
+
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-4">
+                                <div class="flex justify-between items-center mb-3 text-sm">
+                                    <span class="text-gray-500">المسافة</span>
+                                    <span class="font-bold">12 كم</span>
+                                </div>
+                                <div class="flex justify-between items-center mb-3 text-sm">
+                                    <span class="text-gray-500">الوقت</span>
+                                    <span class="font-bold">25 دقيقة</span>
+                                </div>
+                                <div class="border-t pt-3 flex justify-between items-center">
+                                    <span class="font-bold text-sm">الإجمالي</span>
+                                    <span class="font-black text-lg text-primary">35 ر.س</span>
+                                </div>
+                            </div>
+
+                            <button class="w-full bg-dark text-white py-3 rounded-xl font-bold mt-auto text-sm">تم تقييم الكابتن بـ 5 نجوم ★</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
