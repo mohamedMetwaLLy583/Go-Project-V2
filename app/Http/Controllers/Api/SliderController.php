@@ -19,7 +19,7 @@ class SliderController extends Controller
                 ->map(function ($slider) {
                     return [
                         'id' => $slider->id,
-                        'image' => $slider->image,
+                        'image' => $slider->image_url, // Return full URL instead of raw DB path
                         'image_url' => $slider->image_url,
                     ];
                 });
